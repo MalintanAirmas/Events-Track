@@ -93,7 +93,7 @@ class TrackingList extends Component {
                             borderRadius: 15,
                             marginBottom: 15
                         }} />
-                <Text>{`Data Ada Data`}</Text>
+                <Text>{`Data Tidak Ditemukan`}</Text>
             </View>
         )
     }
