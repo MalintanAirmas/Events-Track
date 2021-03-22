@@ -1,5 +1,15 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, FlatList, ScrollView, Animated, StyleSheet, Dimensions } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    FlatList,
+    ScrollView,
+    Animated,
+    StyleSheet,
+    Dimensions
+} from 'react-native';
 import * as Styles from 'App/Styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -18,19 +28,46 @@ class TrackingList extends Component {
     _renderListEvents = ({ item, index }) => {
         return (
             <TouchableOpacity
-                onPress={() => { this.props.navigation.navigate('DetailEvents', { data: item, refresh: () => { this.setState({ refresh: true }) } }) }}
+                onPress={() => {
+                    this.props.navigation.navigate('DetailEvents', {
+                        data: item, refresh: () => { this.setState({ refresh: true }) }
+                    })
+                }}
                 style={[Styles.Helpers.row, localStyles.listCard]}>
                 <View style={{ width: 94, height: 94 }}>
-                    <Image source={{ uri: item.img }} style={localStyles.imgStyle} />
+                    <Image
+                        source={{ uri: item.img }}
+                        style={localStyles.imgStyle} />
                 </View>
                 <View style={[localStyles.informationListCard]}>
                     <View>
-                        <Text style={[localStyles.titleListCard]} numberOfLines={1} ellipsizeMode={'tail'}>{item.title}</Text>
-                        <Text style={{ fontSize: 10, }} numberOfLines={2} ellipsizeMode={'tail'}>{item.address}</Text>
+                        <Text
+                            style={[localStyles.titleListCard]}
+                            numberOfLines={1}
+                            ellipsizeMode={'tail'}>
+                            {item.title}
+                        </Text>
+                        <Text
+                            style={{ fontSize: 10, }}
+                            numberOfLines={2}
+                            ellipsizeMode={'tail'}>
+                            {item.address}
+                        </Text>
                     </View>
-                    <View style={[Styles.Helpers.row, { alignItems: "flex-end", justifyContent: "space-between" }]}>
+                    <View
+                        style={
+                            [
+                                Styles.Helpers.row,
+                                {
+                                    alignItems: "flex-end",
+                                    justifyContent: "space-between"
+                                }
+                            ]}>
                         <Icon name="money" size={20} color={Styles.Colors.primaryLight} />
-                        <Text style={{ fontSize: 12 }}>{`${item.isFree ? "Free" : "$ " + item.price} `}</Text>
+                        <Text
+                            style={{ fontSize: 12 }}>
+                            {`${item.isFree ? "Free" : "$ " + item.price} `}
+                        </Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -61,7 +98,14 @@ class TrackingList extends Component {
 
         return (
             <View style={[Styles.Helpers.center, localStyles.btnTotal]}>
-                <Text style={{ color: Styles.Colors.trueWhite, fontWeight: "bold" }}>{`Total ($${total})`}</Text>
+                <Text
+                    style={
+                        {
+                            color: Styles.Colors.trueWhite,
+                            fontWeight: "bold"
+                        }}>
+                    {`Total ($${total})`}
+                </Text>
             </View>
         )
     }
