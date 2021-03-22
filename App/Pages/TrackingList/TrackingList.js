@@ -24,6 +24,7 @@ class TrackingList extends Component {
             scrollY: new Animated.Value(0),
         }
     }
+
     // Component yang akan di render ke dalam flatlist
     _renderListEvents = ({ item, index }) => {
         return (
@@ -73,6 +74,30 @@ class TrackingList extends Component {
             </TouchableOpacity>
         )
     }
+
+    _listEmptyComponent() {
+        return (
+            <View style={
+                [
+                    Styles.Helpers.fill,
+                    Styles.Helpers.fullSize,
+                    Styles.Helpers.center,
+                    { height: 500 }
+                ]}>
+                <Image
+                    source={require('App/Assets/Images/img_not_found.png')}
+                    style={
+                        {
+                            width: 100,
+                            height: 100,
+                            borderRadius: 15,
+                            marginBottom: 15
+                        }} />
+                <Text>{`Data Ada Data`}</Text>
+            </View>
+        )
+    }
+
     // Tempat Initialisasi Data dan Component Flatlist
     renderListEvents() {
         const { data } = this.props;
@@ -80,6 +105,7 @@ class TrackingList extends Component {
             <FlatList
                 contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }}
                 data={data.filter(element => element.isTracked)}
+                ListEmptyComponent={this._listEmptyComponent()}
                 onScroll={(e) => {
                     this.state.scrollY.setValue(e.nativeEvent.contentOffset.y)
                 }}
@@ -90,30 +116,34 @@ class TrackingList extends Component {
         )
     }
     renderBtnTotal() {
-        const totalArray = this.props.data.filter(element => element.isTracked);
+        const { data } = this.props;
+        const totalArray = data.filter(element => element.isTracked);
         let total = 0;
         for (let index = 0; index < totalArray.length; index++) {
             total += totalArray[index].price;
         }
 
-        return (
-            <View style={[Styles.Helpers.center, localStyles.btnTotal]}>
-                <Text
-                    style={
-                        {
-                            color: Styles.Colors.trueWhite,
-                            fontWeight: "bold"
-                        }}>
-                    {`Total ($${total})`}
-                </Text>
-            </View>
-        )
+        if (totalArray.length > 0) {
+            return (
+                <View style={[Styles.Helpers.center, localStyles.btnTotal]}>
+                    <Text
+                        style={
+                            {
+                                color: Styles.Colors.trueWhite,
+                                fontWeight: "bold"
+                            }}>
+                        {`Total ($${total})`}
+                    </Text>
+                </View>
+            )
+        }
+        return <View />
     }
     render() {
         return (
             <View style={{ paddingHorizontal: 15 }}>
                 {this.renderListEvents()}
-                {this.props.data.filter(element => element.isTracked).length > 0 && this.renderBtnTotal()}
+                {this.renderBtnTotal()}
             </View>
         )
     }
